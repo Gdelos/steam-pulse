@@ -34,10 +34,14 @@ while True:
 
             if average_volume > 0:
 
-                if volume_int > average_volume * 2:
+                anomaly_score = round(volume_int / average_volume, 2)
+
+                print("Anomaly score:", anomaly_score)
+
+                if anomaly_score > 2:
 
                     text = f"""
-🚨 Steam Pulse Alert
+🚨 Steam Pulse Anomaly
 
 Item: {item_name}
 
@@ -46,7 +50,7 @@ Volume: {volume}
 
 Average Volume: {average_volume}
 
-Unusual volume anomaly detected.
+Anomaly Score: {anomaly_score}x
 """
 
                     print(text)
