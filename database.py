@@ -29,7 +29,8 @@ def save_item(item_name, price, volume):
 
     conn.commit()
 
-    def get_average_volume(item_name):
+
+def get_average_volume(item_name):
 
     cursor.execute("""
     SELECT AVG(volume)
