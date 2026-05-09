@@ -1,6 +1,7 @@
 import time
 
 from parser import get_item_data
+from alerts import send_alert
 
 print("Steam Pulse started...")
 
@@ -21,7 +22,7 @@ while True:
 
         if last_volume and volume != last_volume:
 
-            print(f"""
+            text = f"""
 🚨 Steam Pulse Alert
 
 Item: AK-47 | Redline
@@ -29,7 +30,11 @@ Price: {price}
 Volume: {volume}
 
 Volume changed.
-""")
+"""
+
+            print(text)
+
+            send_alert(text)
 
         last_volume = volume
 

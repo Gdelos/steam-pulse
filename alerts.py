@@ -1,11 +1,16 @@
-from aiogram import Bot
-from dotenv import load_dotenv
 import os
+import requests
 
-load_dotenv()
-
-bot = Bot(token=os.getenv("BOT_TOKEN"))
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 CHANNEL_ID = os.getenv("CHANNEL_ID")
 
-async def send_alert(text):
-    await bot.send_message(CHANNEL_ID, text)
+def send_alert(text):
+
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+
+    data = {
+        "chat_id": CHANNEL_ID,
+        "text": text
+    }
+
+    requests.post(url, data=data)
