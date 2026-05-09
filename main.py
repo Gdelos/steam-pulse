@@ -6,8 +6,6 @@ from database import save_item, get_average_volume
 
 print("Steam Pulse LIVE...")
 
-last_volumes = {}
-
 while True:
 
     try:
@@ -32,9 +30,11 @@ while True:
 
             average_volume = get_average_volume(item_name)
 
-if average_volume > 0:
+            print("Average volume:", average_volume)
 
-    if volume_int > average_volume * 2:
+            if average_volume > 0:
+
+                if volume_int > average_volume * 2:
 
                     text = f"""
 🚨 Steam Pulse Alert
@@ -44,18 +44,19 @@ Item: {item_name}
 Price: {price}
 Volume: {volume}
 
-Unusual volume spike detected.
+Average Volume: {average_volume}
+
+Unusual volume anomaly detected.
 """
 
                     print(text)
 
                     send_alert(text)
 
-            last_volumes[item_name] = volume_int
-
             time.sleep(3)
 
     except Exception as e:
+
         print("ERROR:", e)
 
     time.sleep(30)
