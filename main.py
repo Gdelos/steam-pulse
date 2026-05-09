@@ -2,6 +2,7 @@ import time
 
 from parser import get_item_data, ITEMS
 from alerts import send_alert
+from database import save_item
 
 print("Steam Pulse LIVE...")
 
@@ -26,6 +27,8 @@ while True:
                 continue
 
             volume_int = int(volume.replace(",", ""))
+
+            save_item(item_name, price, volume_int)
 
             old_volume = last_volumes.get(item_name)
 
