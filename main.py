@@ -20,7 +20,7 @@ while True:
         volume = item["volume"]
         price = item["price"]
 
-        if last_volume and volume != last_volume:
+        if True:
 
             text = f"""
 🚨 Steam Pulse Alert
