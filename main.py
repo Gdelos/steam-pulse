@@ -20,7 +20,7 @@ while True:
         volume = item["volume"]
         price = item["price"]
 
-        if True:
+        if last_volume and int(volume.replace(',', '')) > int(last_volume.replace(',', '')) * 2:
 
             text = f"""
 🚨 Steam Pulse Alert
