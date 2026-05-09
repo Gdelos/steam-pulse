@@ -10,6 +10,8 @@ from database import (
 
 print("Steam Pulse LIVE...")
 
+last_alerts = {}
+
 while True:
 
     try:
@@ -54,7 +56,11 @@ while True:
 
                 print("Anomaly score:", anomaly_score)
 
-                if anomaly_score > 2:
+                current_time = time.time()
+
+                last_alert_time = last_alerts.get(item_name, 0)
+
+                if anomaly_score > 2 and current_time - last_alert_time > 3600:
 
                     text = f"""
 🚨 Steam Pulse Anomaly
@@ -73,6 +79,8 @@ Records: {record_count}
                     print(text)
 
                     send_alert(text)
+
+                    last_alerts[item_name] = current_time
 
             time.sleep(3)
 

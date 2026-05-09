@@ -45,7 +45,8 @@ def get_average_volume(item_name):
 
     return 0
 
-    def get_record_count(item_name):
+
+def get_record_count(item_name):
 
     cursor.execute("""
     SELECT COUNT(*)
