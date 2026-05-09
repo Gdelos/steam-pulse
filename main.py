@@ -2,7 +2,7 @@ import time
 
 from parser import get_item_data, ITEMS
 from alerts import send_alert
-from database import save_item
+from database import save_item, get_average_volume
 
 print("Steam Pulse LIVE...")
 
@@ -30,11 +30,11 @@ while True:
 
             save_item(item_name, price, volume_int)
 
-            old_volume = last_volumes.get(item_name)
+            average_volume = get_average_volume(item_name)
 
-            if old_volume:
+if average_volume > 0:
 
-                if volume_int > old_volume * 2:
+    if volume_int > average_volume * 2:
 
                     text = f"""
 🚨 Steam Pulse Alert

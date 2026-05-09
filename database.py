@@ -28,3 +28,18 @@ def save_item(item_name, price, volume):
     """, (item_name, price, volume))
 
     conn.commit()
+
+    def get_average_volume(item_name):
+
+    cursor.execute("""
+    SELECT AVG(volume)
+    FROM market_data
+    WHERE item_name = ?
+    """, (item_name,))
+
+    result = cursor.fetchone()
+
+    if result[0]:
+        return int(result[0])
+
+    return 0
