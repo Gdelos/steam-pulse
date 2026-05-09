@@ -1,27 +1,34 @@
 import requests
-
-URL = "https://steamcommunity.com/market/priceoverview/?appid=730&currency=1&market_hash_name=AK-47%20%7C%20Redline%20(Field-Tested)"
+from urllib.parse import quote
 
 headers = {
     "User-Agent": "Mozilla/5.0"
 }
 
-def get_item_data():
+ITEMS = [
+    "AK-47 | Redline (Field-Tested)",
+    "AWP | Asiimov (Battle-Scarred)",
+    "M4A4 | Howl (Factory New)",
+    "Desert Eagle | Blaze (Factory New)",
+    "USP-S | Kill Confirmed (Field-Tested)"
+]
 
-    print("Sending request...")
+def get_item_data(item_name):
+
+    encoded_name = quote(item_name)
+
+    url = f"https://steamcommunity.com/market/priceoverview/?appid=730&currency=1&market_hash_name={encoded_name}"
 
     response = requests.get(
-        URL,
+        url,
         headers=headers,
-        proxies={},
         timeout=10
     )
-
-    print("Response received")
 
     data = response.json()
 
     return {
+        "name": item_name,
         "price": data.get("lowest_price"),
         "volume": data.get("volume")
     }

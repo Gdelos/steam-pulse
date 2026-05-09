@@ -1,42 +1,56 @@
 import time
 
-from parser import get_item_data
+from parser import get_item_data, ITEMS
 from alerts import send_alert
 
-print("Steam Pulse started...")
+print("Steam Pulse LIVE...")
 
-last_volume = None
+last_volumes = {}
 
 while True:
 
     try:
 
-        print("Checking Steam...")
+        for item_name in ITEMS:
 
-        item = get_item_data()
+            print(f"Checking {item_name}")
 
-        print("DATA:", item)
+            item = get_item_data(item_name)
 
-        volume = item["volume"]
-        price = item["price"]
+            print(item)
 
-        if last_volume and int(volume.replace(',', '')) > int(last_volume.replace(',', '')) * 2:
+            volume = item["volume"]
+            price = item["price"]
 
-            text = f"""
+            if not volume:
+                continue
+
+            volume_int = int(volume.replace(",", ""))
+
+            old_volume = last_volumes.get(item_name)
+
+            if old_volume:
+
+                if volume_int > old_volume * 2:
+
+                    text = f"""
 🚨 Steam Pulse Alert
 
-Item: AK-47 | Redline
+Item: {item_name}
+
 Price: {price}
 Volume: {volume}
 
-Volume changed.
+Unusual volume spike detected.
 """
 
-            print(text)
+                    print(text)
 
-            send_alert(text)
+                    send_alert(text)
 
-        last_volume = volume
+            last_volumes[item_name] = volume_int
+
+            time.sleep(3)
 
     except Exception as e:
         print("ERROR:", e)
