@@ -60,7 +60,7 @@ while True:
 
                 last_alert_time = last_alerts.get(item_name, 0)
 
-                if anomaly_score > 2 and current_time - last_alert_time > 3600:
+                if anomaly_score > 1.3 and current_time - last_alert_time > 3600:
 
                     text = f"""
 🚨 Steam Pulse Anomaly
