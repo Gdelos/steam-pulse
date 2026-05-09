@@ -2,7 +2,11 @@ import time
 
 from parser import get_item_data, ITEMS
 from alerts import send_alert
-from database import save_item, get_average_volume
+from database import (
+    save_item,
+    get_average_volume,
+    get_record_count
+)
 
 print("Steam Pulse LIVE...")
 
@@ -28,6 +32,18 @@ while True:
 
             save_item(item_name, price, volume_int)
 
+            record_count = get_record_count(item_name)
+
+            print("Records:", record_count)
+
+            if record_count < 5:
+
+                print("Not enough data yet")
+
+                time.sleep(2)
+
+                continue
+
             average_volume = get_average_volume(item_name)
 
             print("Average volume:", average_volume)
@@ -49,8 +65,9 @@ Price: {price}
 Volume: {volume}
 
 Average Volume: {average_volume}
-
 Anomaly Score: {anomaly_score}x
+
+Records: {record_count}
 """
 
                     print(text)

@@ -44,3 +44,15 @@ def get_average_volume(item_name):
         return int(result[0])
 
     return 0
+
+    def get_record_count(item_name):
+
+    cursor.execute("""
+    SELECT COUNT(*)
+    FROM market_data
+    WHERE item_name = ?
+    """, (item_name,))
+
+    result = cursor.fetchone()
+
+    return result[0]
